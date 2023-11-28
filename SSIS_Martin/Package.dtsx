@@ -11,10 +11,36 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="32"
-  DTS:VersionGUID="{4DED8DB6-B73B-4927-9342-CF881E144C22}">
+  DTS:VersionBuild="41"
+  DTS:VersionGUID="{97D25E15-6E51-480C-AF0B-B38F68336837}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{26CEE6FB-8A3A-4D5B-BC12-0C6B341BF5E5}"
+      DTS:ObjectName="LocalHost 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Provider=SQLNCLIRDA11.1;Integrated Security=SSPI;Application Name=SSIS-Package-{26CEE6FB-8A3A-4D5B-BC12-0C6B341BF5E5}LocalHost 1;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.SSISCustomers]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4B967339-90C1-4AB3-9FFD-7EA076013902}"
+      DTS:ObjectName="LocalHost.SSISCustomers">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=SSISCustomers;Provider=SQLNCLIRDA11.1;Integrated Security=SSPI;Application Name=SSIS-Package-{4B967339-90C1-4AB3-9FFD-7EA076013902}LocalHost.SSISCustomers;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
@@ -343,7 +369,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset"></property>
+                  name="OpenRowset">[dbo].[Customers]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -373,11 +399,11 @@
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
+                  name="FastLoadKeepNulls">true</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                  name="FastLoadOptions">TABLOCK</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -386,8 +412,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
-                  connectionManagerID="{2F97B6DD-0F84-4D4A-8052-21D53BCC5DD9}:invalid"
-                  connectionManagerRefId="{2F97B6DD-0F84-4D4A-8052-21D53BCC5DD9}:invalid"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SSISCustomers]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SSISCustomers]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -398,8 +424,85 @@
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Title]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Title"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Title]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[MiddleName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="MiddleName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[MiddleName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Suffix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Suffix"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Suffix]" />
+                  </inputColumns>
                   <externalMetadataColumns
-                    isUsed="True" />
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Suffix" />
+                  </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
@@ -443,7 +546,7 @@
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset"></property>
+                  name="OpenRowset">[dbo].[Customer_Followup]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -465,7 +568,7 @@
                   dataType="System.Int32"
                   description="Specifies the mode used to access the database."
                   name="AccessMode"
-                  typeConverter="AccessMode">0</property>
+                  typeConverter="AccessMode">3</property>
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
@@ -473,11 +576,11 @@
                 <property
                   dataType="System.Boolean"
                   description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
-                  name="FastLoadKeepNulls">false</property>
+                  name="FastLoadKeepNulls">true</property>
                 <property
                   dataType="System.String"
                   description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                  name="FastLoadOptions"></property>
+                  name="FastLoadOptions">TABLOCK</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -486,6 +589,8 @@
               <connections>
                 <connection
                   refId="Package\Data Flow Task\OLE DB Destination 1.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SSISCustomers]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SSISCustomers]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -496,8 +601,85 @@
                   errorRowDisposition="FailComponent"
                   hasSideEffects="true"
                   name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[Title]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Title"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Title]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[FirstName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="FirstName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[FirstName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[MiddleName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="MiddleName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[MiddleName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[LastName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="LastName"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[LastName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].Columns[Suffix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Suffix"
+                      externalMetadataColumnId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      lineageId="Package\Data Flow Task\Flat File Source.Outputs[Flat File Source Output].Columns[Suffix]" />
+                  </inputColumns>
                   <externalMetadataColumns
-                    isUsed="True" />
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[CustomerFollowupID]"
+                      dataType="i4"
+                      name="CustomerFollowupID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Title]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[FirstName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[MiddleName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="MiddleName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[LastName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task\OLE DB Destination 1.Inputs[OLE DB Destination Input].ExternalColumns[Suffix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="10"
+                      name="Suffix" />
+                  </externalMetadataColumns>
                 </input>
               </inputs>
               <outputs>
@@ -559,8 +741,8 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{2F97B6DD-0F84-4D4A-8052-21D53BCC5DD9}"
-          SQLTask:SqlStatementSource="USE MASTER&#xA;GO&#xA;DROP DATABASE IF EXISTS SSISCustomers&#xA;GO&#xA;CREATE DATABASE SSISCustomers&#xA;GO&#xA;USE SSISCustomers&#xA;GO&#xA;CREATE TABLE Customers (&#xA;    CustomerID INT PRIMARY KEY IDENTITY(1,1),&#xA;    Title char(3),&#xA;    FirstName varchar(100),&#xA;    MiddleName varchar(100),&#xA;    LastName varchar(100),&#xA;    Suffix char(10)&#xA;)&#xA;GO&#xA;CREATE TABLE Customer_Followup (&#xA;    CustomerFollowupID INT PRIMARY KEY IDENTITY(1,1),&#xA;    Title char(3),&#xA;    FirstName varchar(100),&#xA;    MiddleName varchar(100),&#xA;    LastName varchar(100),&#xA;    Suffix char(10)&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:Connection="{26CEE6FB-8A3A-4D5B-BC12-0C6B341BF5E5}"
+          SQLTask:SqlStatementSource="USE MASTER&#xA;GO&#xA;DROP DATABASE IF EXISTS SSISCustomers&#xA;GO&#xA;CREATE DATABASE SSISCustomers&#xA;GO&#xA;USE SSISCustomers&#xA;GO&#xA;CREATE TABLE Customers (&#xA;    CustomerID INT PRIMARY KEY IDENTITY(1,1),&#xA;    Title varchar(100),&#xA;    FirstName varchar(100),&#xA;    MiddleName varchar(100),&#xA;    LastName varchar(100),&#xA;    Suffix varchar(100)&#xA;)&#xA;GO&#xA;CREATE TABLE Customer_Followup (&#xA;    CustomerFollowupID INT PRIMARY KEY IDENTITY(1,1),&#xA;    Title char(100),&#xA;    FirstName varchar(100),&#xA;    MiddleName varchar(100),&#xA;    LastName varchar(100),&#xA;    Suffix varchar(100)&#xA;)" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
@@ -657,80 +839,80 @@
         <NodeLayout
           Size="176.571428571429,42.2857142857143"
           Id="Package\Data Flow Task\OLE DB Destination"
-          TopLeft="154.999997177058,391.18179645531" />
+          TopLeft="108.888886905747,347.512973392895" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[SuffixIsNull]"
-          TopLeft="290.142847710423,272.090898798641">
+          TopLeft="265.095228662804,272.090898798641">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-46.8571362476508,119.090897656669"
+              EndConnector="-67.9206274713429,75.4220745942539"
               Start="0,0"
-              End="-46.8571362476508,111.590897656669">
+              End="-67.9206274713429,67.9220745942539">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,55.5454488283347" />
+                    End="0,26.6216857537786" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,55.5454488283347"
-                    Point2="0,59.5454488283347"
-                    Point3="-4,59.5454488283347" />
+                    Point1="0,26.6216857537786"
+                    Point2="0,30.6216857537786"
+                    Point3="-4,30.6216857537786" />
                   <mssgle:LineSegment
-                    End="-42.8571362476508,59.5454488283347" />
+                    End="-63.9206274713429,30.6216857537786" />
                   <mssgle:CubicBezierSegment
-                    Point1="-42.8571362476508,59.5454488283347"
-                    Point2="-46.8571362476508,59.5454488283347"
-                    Point3="-46.8571362476508,63.5454488283347" />
+                    Point1="-63.9206274713429,30.6216857537786"
+                    Point2="-67.9206274713429,30.6216857537786"
+                    Point3="-67.9206274713429,34.6216857537786" />
                   <mssgle:LineSegment
-                    End="-46.8571362476508,111.590897656669" />
+                    End="-67.9206274713429,67.9220745942539" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.7813610925754,64.5454488283347,50.7055859375,9.7978515625"
+              BoundingBox="-59.3131067044215,35.6216857537786,50.7055859375,9.7978515625"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
           Size="185.142857142858,42.2857142857143"
           Id="Package\Data Flow Task\OLE DB Destination 1"
-          TopLeft="403.888881533051,413.636340662715" />
+          TopLeft="405.555548169363,354.103886783159" />
         <EdgeLayout
           Id="Package\Data Flow Task.Paths[Conditional Split Default Output]"
           TopLeft="315.190466758042,272.090898798641">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="181.269843346437,141.545441864074"
+              EndConnector="182.93650998275,82.0129879845173"
               Start="0,0"
-              End="181.269843346437,134.045441864074">
+              End="182.93650998275,74.5129879845173">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,53.4680564537484" />
+                    End="0,29.2976248571879" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,53.4680564537484"
-                    Point2="0,57.4680564537484"
-                    Point3="4,57.4680564537484" />
+                    Point1="0,29.2976248571879"
+                    Point2="0,33.2976248571879"
+                    Point3="4,33.2976248571879" />
                   <mssgle:LineSegment
-                    End="177.269843346437,57.4680564537484" />
+                    End="178.93650998275,33.2976248571879" />
                   <mssgle:CubicBezierSegment
-                    Point1="177.269843346437,57.4680564537484"
-                    Point2="181.269843346437,57.4680564537484"
-                    Point3="181.269843346437,61.4680564537484" />
+                    Point1="178.93650998275,33.2976248571879"
+                    Point2="182.93650998275,33.2976248571879"
+                    Point3="182.93650998275,37.2976248571879" />
                   <mssgle:LineSegment
-                    End="181.269843346437,134.045441864074" />
+                    End="182.93650998275,74.5129879845173" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="20.0210154232186,62.4680564537484,141.2278125,11.658203125"
+              BoundingBox="20.8543487413748,38.2976248571879,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -739,6 +921,19 @@
   </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task\OLE DB Destination 1">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
